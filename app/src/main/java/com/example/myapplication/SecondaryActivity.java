@@ -6,26 +6,39 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class SecondaryActivity  extends AppCompatActivity {
 
-    private Button backButton;
+    private Button button1;
+    private Button button2;
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.secondary_activity);
 
-        backButton = findViewById(R.id.back_button);
+        button1 = findViewById(R.id.button_1);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SecondaryActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        button1.setOnClickListener(v -> {
+            fragmentManager.beginTransaction()
+                    .addToBackStack("Grup One")
+                    .replace(R.id.fragmentContainerView, new GrupOne(), null)
+                    .commit();
         });
 
+
+        button2 = findViewById(R.id.button_2);
+
+        button2.setOnClickListener(v -> {
+            fragmentManager.beginTransaction()
+                    .addToBackStack("Grup Two")
+                    .replace(R.id.fragmentContainerView, new GrupTwo(), null)
+                    .commit();
+        });
     }
 }
